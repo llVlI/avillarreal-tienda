@@ -38,5 +38,3 @@ public class Categoria implements Serializable {
     private Boolean activo;     
   
 }
-
- 
