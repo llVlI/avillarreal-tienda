@@ -24,4 +24,12 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
             value = "SELECT * FROM producto p WHERE p.precio BETWEEN :precioInf AND :precioSup ORDER BY p.precio ASC")
     public List<Producto> consultaSQL(@Param("precioInf") double precioInf, @Param("precioSup") double precioSup);
 
+    //Práctica #2: consulta ampliada sql nativa que junta producto y categoria,
+    //filtrando por el nombre de la categoría y una cantidad mínima de existencias
+    @Query(nativeQuery = true,
+            value = "SELECT p.* FROM producto p "
+            + "INNER JOIN categoria c ON p.id_categoria = c.id_categoria "
+            + "WHERE c.descripcion = :categoria AND p.existencias >= :existenciasMin "
+            + "ORDER BY p.precio ASC")
+    public List<Producto> consultaAmpliada(@Param("categoria") String categoria, @Param("existenciasMin") int existenciasMin);
 }

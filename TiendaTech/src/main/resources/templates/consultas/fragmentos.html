@@ -63,7 +63,7 @@
     <div th:replace="~{consultas/fragmentos :: formConsulta('primary',#{consultas.derivadas},'/consultas/consultaDerivada')}"/>
     <div th:replace="~{consultas/fragmentos :: formConsulta('warning',#{consultas.jpql},'/consultas/consultaJPQL')}"/>
     <div th:replace="~{consultas/fragmentos :: formConsulta('success',#{consultas.sql},'/consultas/consultaSQL')}"/>
-    <div class='card'><p>Acá va su Práctica #2</p></div>
+    <div th:replace="~{consultas/fragmentos :: formAmpliada}"/>
 </section>
 
 <!-- fragmento 4 para mostrar el formulario factorizado -->
@@ -88,6 +88,40 @@
             <div class="card-footer text-center">
                 <button type='submit' class='btn text-white' th:classappend="${'btn-'+colorForm}">
                     <i class='fa-solid fa-magnifying-glass'></i> [[${textoForm}]]
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- fragmento 5: Práctica #2 - consulta ampliada sql nativa por categoría y existencias mínimas -->
+<div th:fragment='formAmpliada'>
+    <form method="post" th:action="@{/consultas/consultaAmpliada}" class='was-validated'>
+        <div class='card p-2'>
+            <div class="card-header text-center text-white bg-dark">
+                <h5>[[#{consultas.ampliada}]]</h5>
+            </div>
+            <div class="card-body">
+                <div class='mb-3'>
+                    <label>[[#{consultas.categoria}]]</label>
+                    <select name='categoria' class='form-control' required>
+                        <option value="">...</option>
+                        <option th:each="c : ${categorias}"
+                                th:value="${c.descripcion}"
+                                th:text="${c.descripcion}"
+                                th:selected="${categoriaSeleccionada != null and categoriaSeleccionada.equals(c.descripcion)}">
+                        </option>
+                    </select>
+                </div>
+                <div class='mb-3'>
+                    <label>[[#{consultas.existencias.minimas}]]</label>
+                    <input type="number" name='existenciasMin' th:value='${existenciasMin}'
+                           class='form-control' min="0" required/>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button type='submit' class='btn btn-dark text-white'>
+                    <i class='fa-solid fa-magnifying-glass'></i> [[#{consultas.ampliada}]]
                 </button>
             </div>
         </div>
