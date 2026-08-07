@@ -34,3 +34,5 @@ build/
 
 ### Firebase ###
 firebase/
+
+application-local.properties
